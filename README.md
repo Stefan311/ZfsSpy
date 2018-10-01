@@ -65,12 +65,12 @@ There are 2 exploration modes: **Block Mode** and **Filesystem Mode**.
 In **Block Mode** you have to follow block pointers to finally access your files. This is very difficoult, but it works on very damaged pools too.  
 1. Device Label Overview --> chose one label
 2. Device Label Detail + Uberblock table --> chose one uberblock. The most rescent is marked yellow.
-3. **Block Pointer Tree** to the master object list
-A block pointer tree starts with one single DMU object as root, continues with multiple levels of blockpointer lists as branches, and ends to a object list as leafes.
+3. **Block Pointer Tree** to the master object list  
+A block pointer tree starts with one single DMU object as root, continues with multiple levels of blockpointer lists as branches, and ends to a object list as leafes.  
 4. The master object list contains between other object types also **DSL DATASET (16)** objects, who pointing to the ZFS datasets, again with the use of a block pointer tree.
 5. Each dataset object list contains 
-- **DIRECTORY CONTENTS (20)** who holding file and directory names
-- **PLAIN FILE CONTENTS (19)** who holding the file data. Each file content object have a link to download the file data or to save the file data to disk. In block mode the ZfsSpy does not know the filename.
+- **DIRECTORY CONTENTS (20)** objects who holding file and directory names
+- **PLAIN FILE CONTENTS (19)** objects who holding the file data. Each file content object have a link to download the file data or to save the file data to disk. In block mode the ZfsSpy does not know the filename, a random name will be used.
 
 In **Filesystem Mode** the ZfsSpy tool does the blockpointer hunting automatic.  
 Chose a ZFS dataset, browse through the directories. On files you can download or save the file data. On dirctories you can enter the directory or save all containing file data to disk.
@@ -79,7 +79,7 @@ You can also switch between Block and Filesystem mode at some points.
 
 Missing Features
 ----------------
-The ZfsSpy is in development, so many important features are still missing:  
+The ZfsSpy is in an early stage of development, so many important features are still missing:  
 - All Compressions except LZ4
 - All Checksumms except Fletcher4
 - Display of file/directory attributes
@@ -87,3 +87,4 @@ The ZfsSpy is in development, so many important features are still missing:
 - usefull help pages on every step
 - more fault tolerance
 - encryption support
+- gangblock support
