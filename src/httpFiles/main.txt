@@ -1,0 +1,21 @@
+(this is a first incomplete help)<br><br>
+<u>Exploration modes</u><br>
+There are two exploration modes: <b>block mode</b> and <b>filesystem mode</b>.<br>
+The <b>block mode</b> shows the disk structures in a detailed way, you have to go through different meta data before you get some file data. This will be difficould to do. The good thing is, that you can maybe recover data who is not accessable in other ways.<br>
+The <b>filesystem mode</b> tries to get the filesystem structures automaticly. You can just get the pool as filesystem. This will work only on nearly healthy pools.<br>
+It will be possible to switch between this modes at some points.<br><br>
+<u>Explore a pool in block mode</u><br>
+1. click on "Browse Blocks"<br>
+A short table of the disklabels are displayed<br>
+2. chose one Disklabel, click on "explore" in the Uberblock colum<br>
+A table with Uberblock numbers are displayed.<br>
+3. click on one Uberblock, the latest (and most rescent) is colored green<br>
+The Uberblock data is displayed.<br>
+4. click on one of the "valid" in the block pointer row. If there is no "valid", go back and chose an other Uberblock.<br>
+An "DMU Object" is displayed.<br>
+5. click on one of the "valid" in the block pointer#0 row.<br>
+An long list of "DMU Object"'s will be displayed.<br>
+6. find one of the Object Type <b>DSL DATASET (16)</b>. If this Object not contins a valid block pointer, continue the search.<br>
+7. click on one of the "valid" in the block pointer row of this Object<br>
+You will get a block pointer list.
+   

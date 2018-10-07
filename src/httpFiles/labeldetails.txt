@@ -1,0 +1,4 @@
+This is a <b>disklabel</b>. Each disklabel contains information about the ZFS device, the list of Uberblocks and information about the zpool.<br>
+To get to the other data structures, you must select a valid Uberblock. The according to Disklabel valid Uberblock is marked in yellow.<br>
+Normally you should use this one, but it may also be useful to look at older (lower numbered) Uberblocks. These can, for example, lead you to deleted or lost file data.<br>
+

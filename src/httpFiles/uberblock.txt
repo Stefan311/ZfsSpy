@@ -1,0 +1,10 @@
+This is a Uberblock. Each Uberblock contains among other information also a Blockpointer.<br>
+The most important information in each block pointer is:<br>
+- Up to 3 pointers to data or block pointer lists. If more than one pointer is specified then it points to copies of the first one.<br>
+- The information about whether and how many levels of block pointer lists are still following<br>
+- The checksum over the data. This checksum is used to detect validity of the linked data.<br>
+- The information of which data type is contained in the data block.<br>
+In the options menu you can choose how block pointers are displayed.<br>
+Short: It is only there, whether the respective pointers are valid or not.<br>
+Long: All information about the pointer is displayed.<br>
+To continue, you must select a pointer.<br>
