@@ -27,10 +27,13 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
 package io;
-import java.io.File;
-import java.io.FileInputStream;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
+import java.nio.channels.SeekableByteChannel;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardOpenOption;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -51,6 +54,7 @@ public class ZFSIO
 		public long size;
 		public String filename;
 		public int vDevId;
+		public SeekableByteChannel reader;
 	}
 	
 	/**
@@ -61,21 +65,36 @@ public class ZFSIO
 		Device dev = new Device();
 		dev.filename = _filename;
 
-		File f = new File(dev.filename);
-
-		if (!f.exists() || f.isDirectory() || !f.canRead())
+		Path path = Paths.get(_filename);
+		
+		if (!Files.exists(path))
 		{
-			throw new Exception("Device not accessable!");
+			throw new Exception("File does not exist: "+_filename);
 		}
 		
-		dev.size = f.length();
-		byte[] result = new byte[256*1024];
-
-		FileInputStream fr = new FileInputStream(f);
-		fr.read(result);
-		fr.close();
+		if (!Files.isReadable(path))
+		{
+			throw new Exception("File is not readable: "+_filename);
+		}
 		
-		ByteBuffer bf = ByteBuffer.wrap(result);
+		try
+		{
+			dev.reader = Files.newByteChannel(path, StandardOpenOption.READ);
+		}
+		catch (Exception e)
+		{
+			throw new Exception("Error opening file: "+_filename);
+		}
+
+		dev.size = dev.reader.size();
+		if (dev.size == 0)
+		{
+			throw new Exception("Error, the file report zero size: "+_filename);
+		}
+
+		ByteBuffer bf = ByteBuffer.allocate(256*1024);
+		dev.reader.position(0);
+		dev.reader.read(bf);
 		HashMap<String,Object> vnp = DataHandlerNVTable.getNVTable(bf, 0x4000, 0x1c000);
 		
 		if (!initVdevIds(vnp,dev))
@@ -101,20 +120,24 @@ public class ZFSIO
 	 */
 	public static ByteBuffer getBlock(Device dev, long sector, int length) throws Exception
 	{
-		File f = new File(dev.filename);
 		if (dev.size < (sector * 512 + length))
 		{
 			throw new Exception("Sector outside device!");
 		}
 		
-		byte[] result = new byte[length];
-
-		FileInputStream fr = new FileInputStream(f);
-		fr.skip(sector * 512);
-		fr.read(result);
-		fr.close();
+		if (!dev.reader.isOpen())
+		{
+			throw new Exception("Device is not open?!");
+		}
 		
-		return ByteBuffer.wrap(result);
+		ByteBuffer fr = ByteBuffer.allocate(length);
+		synchronized (dev.reader)
+		{
+			dev.reader.position(sector * 512);
+			dev.reader.read(fr);
+		}
+		fr.rewind();
+		return fr;
 	}
 	
 	/**

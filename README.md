@@ -44,14 +44,14 @@ Chose one (or more) ZFS devices for access. This can also be done on the Web-GUI
 Disables device setup and save-to-server feature for the public demo version.  
 
 **Example 1:**  
-`java -jar ZfsSpy.jar -v /dev/da1 -v /dev/da2` and calling `http://127.0.0.1:8000/` in your browser.
+`java -jar ZfsSpy.jar -v /dev/sda1 -v /dev/sda2` and calling `http://127.0.0.1:8000/` in your browser.
 
 **Example 2:**  
-remote: `java -jar ZfsSpy.jar -i 192.168.16.4 -p 9999 -v /dev/da1 -v /dev/da2`  
+remote: `java -jar ZfsSpy.jar -i 192.168.16.4 -p 9999 -v /dev/sda1 -v /dev/sda2`  
 local: Calling `http://192.168.16.4:9999/` in your browser.
 
 **Example 3:**  
-remote: `java -jar ZfsSpy.jar -v /dev/da1 -v /dev/da2`  
+remote: `java -jar ZfsSpy.jar -v /dev/sda1 -v /dev/sda2`  
 local: `ssh -L 8000:127.0.0.1:8000 me@192.168.16.4` and calling `http://127.0.0.1:8000/` in your browser.
 
 Public demo
@@ -88,3 +88,7 @@ The ZfsSpy is in an early stage of development, so many important features are s
 - more fault tolerance
 - encryption support
 - gangblock support
+
+Known Issues
+------------
+- Raw devices are not accessable in FreeBSD, please use image files as workarround

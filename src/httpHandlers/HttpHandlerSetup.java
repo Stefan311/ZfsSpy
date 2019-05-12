@@ -44,6 +44,10 @@ public class HttpHandlerSetup extends HttpHandlerBase
 			{
 				int i = Integer.parseInt(params.get("remove"));
 				ZFSIO.Device dev = ZFSIO.getDevice(i);
+				if (dev.reader != null && dev.reader.isOpen())
+				{
+					dev.reader.close();
+				}
 				ZFSIO.devices.remove(dev);
 			}
 			catch (Exception e)
