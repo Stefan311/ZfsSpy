@@ -1,6 +1,13 @@
 # ZfsSpy
 Tool to recover data from damaged ZFS pools
 
+WARNING
+-------
+```diff
+- This project is abandoned. It will not be developed any further. 
+- It is very likely that it will not work with pools from newer ZFS versions.
+```
+
 What is ZFS?
 ------------
 ZFS is a combined file system and logical volume manager designed by Sun Microsystems. ZFS is scalable, and includes extensive protection against data corruption, support for high storage capacities, efficient data compression, integration of the concepts of filesystem and volume management, snapshots and copy-on-write clones, continuous integrity checking and automatic repair, RAID-Z, native NFSv4 ACLs, and can be very precisely configured. The two main implementations, by Oracle and by the OpenZFS project, are extremely similar, making ZFS widely available within Unix-like systems. 
@@ -53,10 +60,6 @@ local: Calling `http://192.168.16.4:9999/` in your browser.
 **Example 3:**  
 remote: `java -jar ZfsSpy.jar -v /dev/sda1 -v /dev/sda2`  
 local: `ssh -L 8000:127.0.0.1:8000 me@192.168.16.4` and calling `http://127.0.0.1:8000/` in your browser.
-
-Public demo
------------
-You can show a public demo on https://imoriath.com/zfsspy/
 
 Exploring ZFS pools
 -------------------
